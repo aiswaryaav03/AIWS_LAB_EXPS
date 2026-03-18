@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibrant JS Quiz</title>
+    <style>
+        /* --- CSS STYLING --- */
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 450px;
+        }
+
+        h1 { text-align: center; color: #4a148c; margin-top: 0; }
+
+        #status-bar {
+            text-align: center;
+            background: #f1f3f9;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .timer-text { font-size: 1.2rem; font-weight: bold; }
+        #timer-display { color: #e91e63; font-size: 1.5rem; }
+
+        .warning {
+            color: #ff5252;
+            font-weight: bold;
+            display: block;
+            margin-top: 5px;
+            animation: blink 0.8s infinite;
+        }
+
+        .question {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question p { font-weight: bold; margin-bottom: 8px; }
+
+        label { display: block; cursor: pointer; margin: 4px 0; }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        #submit-btn { background: #6c63ff; color: white; }
+        #submit-btn:hover { background: #5a52d5; }
+        #submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+        #restart-btn { background: #00c853; color: white; }
+
+        .result-area {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .hidden { display: none; }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-card">
+        <h1>Quick Quiz</h1>
+
+        <div id="status-bar">
+            <div class="timer-text">Time Left: <span id="timer-display">10</span>s</div>
+            <div id="warning-msg" class="warning hidden">Only 5 seconds remaining!</div>
+        </div>
+
+        <form id="quiz-form">
+            <div class="question">
+                <p>1. Which tag is used for JavaScript?</p>
+                <label><input type="radio" name="q1" value="script" required> &lt;script&gt;</label>
+                <label><input type="radio" name="q1" value="js"> &lt;js&gt;</label>
+            </div>
+
+            <div class="question">
+                <p>2. How do you write "Hello" in an alert?</p>
+                <label><input type="radio" name="q2" value="msg"> msg("Hello")</label>
+                <label><input type="radio" name="q2" value="alert"> alert("Hello")</label>
+            </div>
+
+            <div class="question">
+                <p>3. Which is used for styling?</p>
+                <label><input type="radio" name="q3" value="css"> CSS</label>
+                <label><input type="radio" name="q3" value="php"> PHP</label>
+            </div>
+
+            <div class="question">
+                <p>4. 10 + "5" in JS is?</p>
+                <label><input type="radio" name="q4" value="15"> 715</label>
+                <label><input type="radio" name="q4" value="105"> 105</label>
+            </div>
+
+            <div class="question">
+                <p>5. Is JS case-sensitive?</p>
+                <label><input type="radio" name="q5" value="yes"> Yes</label>
+                <label><input type="radio" name="q5" value="no"> No</label>
+            </div>
+
+            <button type="submit" id="submit-btn">Submit Quiz</button>
+        </form>
+
+        <div id="result-container" class="result-area hidden">
+            <h2 id="final-score"></h2>
+            <button id="restart-btn">Try Again</button>
+        </div>
+    </div>
+
+    <script>
+        /* --- JAVASCRIPT LOGIC --- */
+        let timeLeft = 10;
+        let timerInterval;
+        const correctAnswers = { q1: "script", q2: "alert", q3: "css", q4: "105", q5: "yes" };
+
+        const timerDisplay = document.getElementById('timer-display');
+        const warningMsg = document.getElementById('warning-msg');
+        const quizForm = document.getElementById('quiz-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultContainer = document.getElementById('result-container');
+        const finalScoreText = document.getElementById('final-score');
+        const restartBtn = document.getElementById('restart-btn');
+
+        function startQuiz() {
+            // Reset variables and UI
+            timeLeft = 10;
+            timerDisplay.textContent = timeLeft;
+            warningMsg.classList.add('hidden');
+            resultContainer.classList.add('hidden');
+            submitBtn.disabled = false;
+            
+            // Re-enable radio buttons
+            const inputs = quizForm.querySelectorAll('input[type="radio"]');
+            inputs.forEach(input => {
+                input.disabled = false;
+                input.checked = false;
+            });
+
+            // Start timer
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
+
+                if (timeLeft === 5) {
+                    warningMsg.classList.remove('hidden');
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    calculateScore();
+                }
+            }, 1000);
+        }
+
+        function calculateScore() {
+            clearInterval(timerInterval);
+            let score = 0;
+            const formData = new FormData(quizForm);
+
+            // Compare answers
+            for (let key in correctAnswers) {
+                if (formData.get(key) === correctAnswers[key]) {
+                    score++;
+                }
+            }
+
+            // Lock the UI
+            const inputs = quizForm.querySelectorAll('input[type="radio"]');
+            inputs.forEach(input => input.disabled = true);
+            submitBtn.disabled = true;
+            warningMsg.classList.add('hidden');
+
+            // Show Results
+            finalScoreText.textContent = `You scored ${score} / 5`;
+            resultContainer.classList.remove('hidden');
+        }
+
+        // Handle Submit Button
+        quizForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            calculateScore();
+        });
+
+        // Handle Restart Button
+        restartBtn.addEventListener('click', () => {
+            startQuiz();
+        });
+
+        // Initial Start
+        startQuiz();
+    </script>
+</body>
+</html>

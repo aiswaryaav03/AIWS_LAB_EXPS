@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Event Timer</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        input[type="datetime-local"] {
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            margin-bottom: 25px;
+            width: 80%;
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 5px;
+            border-radius: 10px;
+        }
+
+        .box span { font-size: 2rem; font-weight: bold; display: block; }
+        .box label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        #status-msg {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff4757;
+            margin-top: 20px;
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Event Countdown</h1>
+        <p>Pick your event date & time:</p>
+        <input type="datetime-local" id="event-picker">
+
+        <div id="display-group">
+            <div class="countdown-grid">
+                <div class="box"><span id="days">00</span><label>Days</label></div>
+                <div class="box"><span id="hours">00</span><label>Hours</label></div>
+                <div class="box"><span id="mins">00</span><label>Mins</label></div>
+                <div class="box"><span id="secs">00</span><label>Secs</label></div>
+            </div>
+        </div>
+
+        <div id="status-msg" class="hidden">Registration Closed</div>
+    </div>
+
+    <script>
+        let timerInterval;
+        const picker = document.getElementById('event-picker');
+        const statusMsg = document.getElementById('status-msg');
+        const displayGroup = document.getElementById('display-group');
+
+        // Set minimum selectable date to "Now"
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        picker.min = now.toISOString().slice(0, 16);
+
+        picker.addEventListener('change', function() {
+            // Clear any existing timer when date changes
+            clearInterval(timerInterval);
+            const targetDate = new Date(this.value).getTime();
+
+            if (isNaN(targetDate)) return;
+
+            statusMsg.classList.add('hidden');
+            displayGroup.classList.remove('hidden');
+
+            timerInterval = setInterval(() => {
+                const currentTime = new Date().getTime();
+                const distance = targetDate - currentTime;
+
+                if (distance < 0) {
+                    clearInterval(timerInterval);
+                    displayGroup.classList.add('hidden');
+                    statusMsg.classList.remove('hidden');
+                    return;
+                }
+
+                // Math conversions
+                const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Update DOM with padding
+                document.getElementById('days').textContent = String(d).padStart(2, '0');
+                document.getElementById('hours').textContent = String(h).padStart(2, '0');
+                document.getElementById('mins').textContent = String(m).padStart(2, '0');
+                document.getElementById('secs').textContent = String(s).padStart(2, '0');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
