@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Event Registration</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+
+body{
+font-family: Arial;
+background: linear-gradient(to right,#ff9966,#ff5e62);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.form-box{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+width:300px;
+}
+
+h2{
+text-align:center;
+}
+
+input{
+width:100%;
+padding:8px;
+margin-top:10px;
+margin-bottom:15px;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+button{
+width:100%;
+padding:10px;
+background:#ff5e62;
+color:white;
+border:none;
+border-radius:5px;
+font-size:16px;
+cursor:pointer;
+}
+
+</style>
+
+<script>
+
+$(document).ready(function(){
+
+const params=new URLSearchParams(window.location.search);
+
+const eventName=params.get("event");
+
+$("#eventName").val(eventName);
+
+});
+
+</script>
+
+</head>
+
+<body>
+
+<div class="form-box">
+
+<h2>Event Registration</h2>
+
+<form>
+
+<label>Event Name</label>
+<input type="text" id="eventName" readonly>
+
+<label>Your Name</label>
+<input type="text" placeholder="Enter your name">
+
+<label>Email</label>
+<input type="email" placeholder="Enter your email">
+
+<button type="submit">Register</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

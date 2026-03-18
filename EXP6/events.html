@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Event Management</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background: linear-gradient(to right,#6dd5ed,#2193b0);
+margin:0;
+text-align:center;
+}
+
+h1{
+color:white;
+padding:20px;
+}
+
+.container{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:20px;
+padding:20px;
+}
+
+.event{
+background:white;
+width:280px;
+padding:20px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.event h3{
+color:#2193b0;
+}
+
+.details{
+display:none;
+margin-top:10px;
+}
+
+button{
+padding:8px 15px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-size:14px;
+}
+
+.toggleBtn{
+background:#2193b0;
+color:white;
+margin-top:10px;
+}
+
+.registerBtn{
+background:#27ae60;
+color:white;
+margin-top:10px;
+}
+
+</style>
+
+<script>
+
+$(document).ready(function(){
+
+$(".toggleBtn").click(function(){
+
+$(this).siblings(".details").slideToggle();
+
+if($(this).text()=="Show Details"){
+$(this).text("Hide Details");
+}
+else{
+$(this).text("Show Details");
+}
+
+$(".event").css("background","white");
+$(this).parent().css("background","#f0fbff");
+
+$(this).siblings("h3").css("color","#e67e22");
+
+var title=$(this).siblings("h3").text();
+alert("Selected Event: "+title);
+
+});
+
+$(".registerBtn").click(function(){
+
+var eventTitle=$(this).closest(".event").find("h3").text();
+
+window.location.href="register.html?event="+encodeURIComponent(eventTitle);
+
+});
+
+});
+
+</script>
+
+</head>
+
+<body>
+
+<h1>Upcoming Events</h1>
+
+<div class="container">
+
+<div class="event">
+
+<h3>Music Festival</h3>
+<p>Date: July 10</p>
+
+<button class="toggleBtn">Show Details</button>
+
+<div class="details">
+<p>Enjoy live music performances and DJ shows.</p>
+<button class="registerBtn">Register</button>
+</div>
+
+</div>
+
+
+<div class="event">
+
+<h3>Tech Workshop</h3>
+<p>Date: July 15</p>
+
+<button class="toggleBtn">Show Details</button>
+
+<div class="details">
+<p>Learn web development, AI and cloud basics.</p>
+<button class="registerBtn">Register</button>
+</div>
+
+</div>
+
+
+<div class="event">
+
+<h3>Art Exhibition</h3>
+<p>Date: July 20</p>
+
+<button class="toggleBtn">Show Details</button>
+
+<div class="details">
+<p>Explore paintings, sculptures and creative artworks.</p>
+<button class="registerBtn">Register</button>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
+
+
