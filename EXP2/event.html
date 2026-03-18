@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Event Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- TC01: External CSS Linking -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>TechFest 2026</h1>
+    <p>Register Now for an Exciting Tech Event!</p>
+</header>
+
+<div class="main-container"> <!-- Added for Flexbox Layout -->
+    <section class="media-section">
+        <h2>Event Highlights</h2>
+        <img src="banner9.jpg" alt="Event Banner">
+        <video controls><source src="promo.mp4" type="video/mp4"></video>
+        <audio controls><source src="intro.mp3.wav" type="audio/mpeg"></audio>
+    </section>
+
+    <section class="form-section">
+        <h2>Event Registration Form</h2>
+        <form>
+            <label>Full Name:</label>
+            <input type="text" required>
+
+            <label>Email:</label>
+            <input type="email" required>
+
+            <label>Date of Birth:</label>
+            <input type="date" required>
+
+            <label>Gender:</label>
+            <div class="radio-group">
+                <input type="radio" name="gender" required> Male
+                <input type="radio" name="gender"> Female
+            </div>
+
+            <label>Event Category:</label>
+            <select required>
+                <option value="">--Select--</option>
+                <option>Workshop</option>
+                <option>Seminar</option>
+                <option>Hackathon</option>
+            </select>
+
+            <label>Address:</label>
+            <textarea rows="4" placeholder="Enter your address"></textarea>
+
+            <label>Upload ID Proof:</label>
+            <input type="file" accept=".pdf,.jpg,.png">
+
+            <input type="submit" value="Register">
+        </form>
+    </section>
+</div>
+
+</body>
+</html>

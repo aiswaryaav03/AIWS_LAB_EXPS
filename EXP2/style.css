@@ -1,0 +1,93 @@
+/* TC03: Typography & Colors */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* TC02 & TC05: Layout & Flexbox */
+.main-container {
+    display: flex;
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+.media-section, .form-section {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* TC04: Spacing & Media Styling */
+img, video {
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+/* Form Styling */
+form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+/* TC07: Input Focus Transition */
+input[type="text"], input[type="email"], input[type="date"], select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+    outline: none;
+}
+
+/* TC06: Button Hover Transition */
+input[type="submit"] {
+    background-color: #27ae60;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    transition: background 0.4s ease, transform 0.2s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #219150;
+    transform: translateY(-2px);
+}
+
+/* TC08 & TC09: Media Queries */
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column; /* Stacks media above form on Tablet/Mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    body { padding: 10px; }
+    header h1 { font-size: 1.5rem; }
+}
