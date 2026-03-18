@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Event Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+
+        header {
+            text-align: center;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+        }
+
+        section {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+            background: white;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        video, audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+        }
+
+        input[type="radio"] {
+            width: auto;
+        }
+
+        input[type="submit"] {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background: #219150;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>TechFest 2026</h1>
+    <p>Register Now for an Exciting Tech Event!</p>
+</header>
+
+<section>
+    <!-- TC02: Image Media -->
+    <h2>Event Banner</h2>
+    <img src="banner9.jpg" alt="Event Banner">
+
+    <!-- TC03: Video Media -->
+    <h2>Promotional Video</h2>
+    <video controls>
+        <source src="promo.mp4" type="video/mp4">
+        Your browser does not support video.
+    </video>
+
+    <!-- TC04: Audio Media -->
+    <h2>Intro Audio</h2>
+    <audio controls>
+        <source src="intro.mp3.wav" type="audio/mpeg">
+        Your browser does not support audio.
+    </audio>
+
+    <!-- Registration Form -->
+    <h2>Event Registration Form</h2>
+
+    <form>
+        <!-- TC05: Basic Inputs -->
+        <label>Full Name:</label>
+        <input type="text" required>
+
+        <label>Email:</label>
+        <input type="email" required>
+
+        <label>Date of Birth:</label>
+        <input type="date" required>
+
+        <!-- TC07: Radio Buttons -->
+        <label>Gender:</label><br>
+        <input type="radio" name="gender" required> Male
+        <input type="radio" name="gender"> Female
+        <input type="radio" name="gender"> Other
+        <br><br>
+
+        <!-- TC07: Dropdown -->
+        <label>Event Category:</label>
+        <select required>
+            <option value="">--Select--</option>
+            <option>Workshop</option>
+            <option>Seminar</option>
+            <option>Hackathon</option>
+        </select>
+
+        <!-- TC08: Textarea -->
+        <label>Address:</label>
+        <textarea rows="4" placeholder="Enter your address"></textarea>
+
+        <!-- TC08: File Upload -->
+        <label>Upload ID Proof:</label>
+        <input type="file" accept=".pdf,.jpg,.png">
+
+        <!-- TC09: Submit -->
+        <input type="submit" value="Register">
+    </form>
+</section>
+
+</body>
+</html>
